@@ -10,6 +10,8 @@ ARG HOME=/root
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install basic tools
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+    sed -i 's/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y \
     curl \
@@ -53,6 +55,8 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     RUST_VERSION=nightly
 
 # Install Rust
+ENV RUSTUP_DIST_SERVER="https://mirrors.tuna.tsinghua.edu.cn/rustup"
+ENV RUSTUP_UPDATE_ROOT="https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup"
 RUN set -eux; \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rustup-init; \
     chmod +x rustup-init; \
